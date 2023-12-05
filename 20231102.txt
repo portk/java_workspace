@@ -1,0 +1,43 @@
+NTFS (New Technology File System)
+cluster당 4 Kbyte씩 파일철 저장
+
+data
+|||||ㅁ -> |||||ㅁ
+ㅁ에 다음 cluster에 대한 포인터가 저장되어 있음
+
+HashMap
+ Map<KeyType, ValueType> = new HashMap<KeyType, ValueType>();
+
+직렬화객체
+클래스 자체를 메모리에 저장하게 만드는 것
+
+serialVersionUID
+네트워크에서 돌아다닐때 다른것과 구분할 수 있는 ID
+
+input과 output은 내 클래스 기준 (클래스로 들어오는 나가는)
+★많이 쓰는 것
+			1byte					2byte
+		InputStream{read()}				Reader(read())
+input		☆ FileInputStream	InputStreamReader	☆★ FileReader
+		★ObjectInputStream		★		☆★ BufferdReader (1줄씩)
+		(readObject())
+----------------------------------------------------------
+		OutputStream(write())				Writer(write())
+output		☆ FileOutputStream	OutputStreamWriter	☆★ FileWriter
+		★ObjectOutputStream()		★		☆ BufferdWriter (1줄씩, 사용도가 별로 없음)
+		(writeObject())					☆★ PrintWriter (이걸 좀더 많이 씀, flush까지 포함되서 함)
+
+각각 첫줄은 추상클래스이다.
+인터넷을 타려면
+socket(소켓)을 만들어야함(2**16개 포트)
+Socket클래스가 1byte로 리턴을 한다.(2byte없음)
+
+
+InputStreamReader는 1byte -> 2byte 형변환
+OutputStreamWriter는 2byte -> 1byte 형변환
+
+직렬화
+1. Serializable	클래스가 통채로 메모리에 저장되게 함.
+
+사용자가 입력할 포트		서버에서 리스닝 대기중인 포트
+client socket			server socket 20000

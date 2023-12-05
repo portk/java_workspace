@@ -1,0 +1,165 @@
+볼륨업 다운을 구현하라고 하면 
+mp3
+radio
+tv
+...
+19개
+
+웹베이스로 해서 어떤걸 만들었는지 알 수 있는것
+new TV
+new Radio
+웹같은 서버에서 사용자가 요청했을 때 new하고 새로 만들면 안됨
+해당되는 클래스에 있는걸 하려면 인스턴스화 해야하는데 new와 refresh
+
+자바는 사용자가 사용 안할 때 바로 정리하는 기능이 없기 때문에 부하가 생김
+해시맵 같은데 담아뒀다가 꺼내는 편
+보통 ArrayList나 HashMap에 넣어둔다
+
+List, Set, Map은 인터페이스임
+
+List는 배열에 Value를 담는것 , 중복가능, 타입이 다 같아야 한다.
+Map : Key(보통 String 주소가 됨)와 Value 키는 중복 불가, 값은 중복 가능 (딕셔너리형)
+Set: 주머니 모양. 중복불가, 순서 없음 (집합형)
+
+Elec이라는 인터페이스를 만들어서 준다
+그러면 Elec이라는 인터페이스를 부모로 해서 오버라이딩을 하며 만들것
+이러면 Method는 통일될것
+
+List, Set, Map이 다 인터페이스
+add() , add(), put(key, value)로 추가를 한다.
+ArrayList ->  List를 부모로 하여 순서있게 만든 것
+TreeSet -> Set을 부모로 함
+
+List Set Map을 자바에서 컬렉션 프레임워크라고 부른다
+Object라는 클래스를 무조건 부모로 가진다(묵시적으로)
+
+상속관계에서 부모자리에 자식도 갈수 있다.
+mp3 a = new mp3;
+TV b = new TV;
+Radio c = new Radio;
+을
+
+Elec a = new mp3;  -> 업캐스팅 자식이 부모로 형변환이 일어남
+Elec b = new TV;
+Elec c = new Radio;
+으로 해도 오류가 나지 않음
+Array List에
+add(Elec a)
+add(TV b)해도 돌아감
+
+add (Object a)
+add (TV b)여도 오류가 안남
+근데 아래와 같은 경우 예상 밖의 것들도 들어갈 수 있어서 좋지는 않다.
+그래서 나온게 generic이다
+
+게시판류는 프로젝트할때 일반적인 기능
+자유게시판, QnA 등등을 만들 때 인터페이스를 만들어서 주고 그런다.
+
+다운캐스팅은 Elec a 로 저장한 것을 mp3 a로 다시 내릴때만 이용한다.
+mp3 = (mp3)a;
+
+다형성(polymorphism)
+다형성을 구현한게 메소드 오버로딩(method Overloading)이다
+3+4=7
+3.1+4 = 7.1
+위처럼 하나의 기호로 여러가지를 할 수 있는게 다형성이다.
+
+System.out.println();
+java.base 모듈의
+java.lang 패키지에 있는
+System 클래스
+out System안에 있는 스태틱 변수
+out은 printStream
+메소드 오버로딩 한 이름으로 다양한 것을 할 수 있는것.
+메소드가 받는 파라미터의 변수, 타입, 순서가 다르면 오버로딩 할 수 있음
+println()		줄바꿈
+println(boolean x)	타입에 따라 골라서 들어감
+println(char x)
+println(char[] x)
+println(double x)
+println(float x)
+println(int x)
+println(long x)
+println(Object x)
+println(String x)
+메소드 오버로딩할 수 없다면 각각 함수명을 다르게 줘야함
+그러면 변수 갯수적 제한과 기억력의 한계를 마주할 수 있게 된다.
+
+메인메소드에서 호출만 하고 코딩은 안하는게 맞음
+
+List
+  ArrayList
+특정 메소드를 했을때 배열로 리턴하는 경우
+값이 자주 안 변하는 경우
+같은 타입의 값만 가능
+
+베얄은 [0]부터
+human[]
+human[][], human[][][] 2차원, 3차원도 가능하지만 잘 안씀
+처음 크기를 만들면 바꿀 수 있는 방법이 없음
+ex) 4개로 선언 -> 5개일때 안들어가짐
+2차원이든 3차원이든 다 같은 type이어야함
+
+MP3[] human = new MP3[3]();
+
+ArrayList는 클래스임
+타입은 <> 안에 선언
+ArrayList<type> name = new ArrayList<Elec>();
+ArrayList는 add하다가 범위를 벗어나면 자동으로 늘어남
+자바는 1억개 이상의 데이터가 들어가면 성능이 크게 저하됨
+그것을 해결하기 위해 guava라는 외부 라이브러리를 사용했었다.
+
+중간이 비게 되면 뒤에서부터 앞으로 다시 채워짐 그래서 뒤에 데이터가 많으면 부하가 많이 걸린다.
+그래서 값이 넣어지고 빠지는 것은 잘 이용하지 않는다.
+
+전송할 때 한번에 보내고 받기 위해 사용한다.
+계속 열어두면 계속 대기상태가 되어 cpu에 부하가 많이 걸리기 때문이다.
+
+ArrayList는 담는 것만 한다.
+
+9장의 내용중에서 익명객체만 쓴다.
+
+스택
+스택에서 하나씩 뽑아내는게 POP이라고 한다.
+pop
+first in last out
+
+Que
+first in first out
+
+9 * 9 마름모 그리기
+    5		9/2	 =  4
+   456		9/2 +- 1 = 3~5
+  34567		9/2 +- 2,1 =
+ 2345678	
+123456789	
+ 2345678	
+  34567		
+   456		
+    5		
+
+
+String
+String quary = "Select *";
+	quary += "from emp";
+	quary += "--------";
+	quary += "--------";
+메모리를 먹는 괴물이 될 수 있으므로 안쓰는 것이 좋음
+ㅁ ------> ㅁ	select *
+ㅁ      / ㅁ	select * from emp
+ㅁ    /    ㅁ	select * from emp -----
+ㅁ--/     ㅁ	select * from emp ------------ 해서 마지막만 지목
+
+저장된 문자열을 바꿀 수 없기 때문에
+문자열을 공유하면서
+메모리를 덧대고 덧대고 덧대어 표현하는 것이므로
+한 덩어리가 되어버린다.
+그 앞의 것들은 다 더미가 되어버린다.
+
+StringBuffer  => 그 이전부터, 동기화 O, multi thread
+StringBuilder => java 1.5 ~, 동기화 X, single thread
+위의 두 클래스가 있는데 이를 통해 문자열 연산을 할 것임.
+두가지가 기능이 똑같다
+
+ArrayList	동기화X, 메소드를 통해 동기화 가능은 함
+Vector		동기화O, 
